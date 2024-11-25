@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Simple Website</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Badminton</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Best Players</h1>
-    <p>Best and Respected Badminton Players</p>
-  </header>
-  <!----------Navigation Bar----------------->
-  <nav>
-    <ul>
-      <li><a href="#index.html">Home</a></li>
-       <li><a href="#about.html">About</a></li>
-      <li><a href="#history.html">History</a></li>
-      <li><a href="players.html">Players</a></li>
-      <li><a href="#where">Where to Play</a></li>
-    </ul>
-  </nav>
-  <!----------Navigation Bar----------------->
-    <h2>Top 3 Best Badminton Players</h2>
-    <!-----------------Images---------------------------------->
-    <p>Lin Dan</p>
-    <img src="https://news.cgtn.com/news/3d417a4e3355544d/img/954b6629-ad76-49f5-9c9e-6bbac35dc957.jpg">
+	<section class="menu">
+		<div class="nav">
+		<div class="logo"><h1>Badminton<b>Info</b></h1></div>	
+		<ul>
+			<li><a href="index.html">Home</a></li>	
+			<li><a href="rackets.html">Rackets</a></li>
+			<li><a class="active" href="players.html">Players</a></li>
+			<li><a href="matches.html">Matches</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+		<div>
+			<input class="signin" type="submit" value="Sign In" name="signin">
+			<input class="signup" type="submit" value="Sign Up" name="signup">
+		  </div>
+		</div>
+	</section>
+	<section class="grid">
+		<div class="content">
+		<div class="content-left">
+			<div class="info">
+				<h2>Professional <br>Badminton Players</h2>
+				<p>Badminton players can obtain the title "Professional Players" just by attending tournaments professionally or attendinf that tournament representing their country.</p>
+				<p>Acquiring this titale is somehow easy enough for anyone that wants to get that title but there is a title that is hard to obtain by a normal individual badminton player</p>
+				<p>The Title is Called "Respected or Legends"</p>
+			</div>
+			<button>More info</button>
+		</div>
+		<div class="content-right">
+			<img src="pictures/image3.png" alt="">
 
-  <p>Lee Chong Wei</p>
-  <img src="https://cdn.i-scmp.com/sites/default/files/images/methode/2018/04/15/27acd684-406a-11e8-b6d9-57447a4b43e5_image_hires_133005.jpg">
+		</div>
+	</section>
+	<h3>Top 5 Respected Badminton Legends</h3>
+	<!---------------Slider--------------------->
+	<section class="slides">
+	<div class="pictures">
+        <div class="slider">
+            <button class="arrow left-arrow" onclick="prevSlide()">&#8249;</button>
+            <div class="image">
+                <img id="slider-image" src="image1.jpg" alt="Image 1">
+                <div id="slider-text"></div>
+                
+            </div>
+            <button class="arrow right-arrow" onclick="nextSlide()">&#8250;</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+	</section>
 
-  <p>Taufik Hidayat</p>
-  <img src="https://awsimages.detik.net.id/community/media/visual/2021/08/25/taufik-hidayat-asian-games-2006.jpeg?w=1200">
-    <!-----------------Images---------------------------------->
 </body>
 </html>
