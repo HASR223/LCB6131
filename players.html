@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Badminton</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<section class="menu">
+		<div class="nav">
+		<div class="logo"><h1>Badminton<b>Info</b></h1></div>	
+		<ul>
+			<li><a href="index.html">Home</a></li>	
+			<li><a href="rackets.html">Rackets</a></li>
+			<li><a class="active" href="players.html">Players</a></li>
+			<li><a href="matches.html">Matches</a></li>
+			<li><a href="contact.html">Contact</a></li>
+		</ul>
+		<div>
+			<input class="signin" type="submit" value="Sign In" name="signin">
+			<input class="signup" type="submit" value="Sign Up" name="signup">
+		  </div>
+		</div>
+	</section>
+	<section class="grid">
+		<div class="content">
+		<div class="content-left">
+			<div class="info">
+				<h2>Professional <br>Badminton Players</h2>
+				<p>Badminton players can obtain the title "Professional Players" just by attending tournaments professionally or attendinf that tournament representing their country.</p>
+				<p>Acquiring this titale is somehow easy enough for anyone that wants to get that title but there is a title that is hard to obtain by a normal individual badminton player</p>
+				<p>The Title is Called "Respected or Legends"</p>
+			</div>
+			<button>More info</button>
+		</div>
+		<div class="content-right">
+			<img src="pictures/image3.png" alt="">
+
+		</div>
+	</section>
+	<h3>Top 5 Respected Badminton Legends</h3>
+	<!---------------Slider--------------------->
+	<section class="slides">
+	<div class="pictures">
+        <div class="slider">
+            <button class="arrow left-arrow" onclick="prevSlide()">&#8249;</button>
+            <div class="image">
+                <img id="slider-image" src="image1.jpg" alt="Image 1">
+                <div id="slider-text"></div>
+                
+            </div>
+            <button class="arrow right-arrow" onclick="nextSlide()">&#8250;</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+	</section>
+
+</body>
+</html>
