@@ -1,0 +1,2527 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuniku Motors</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    .page {
+      display: none;
+      min-height: 100%;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .social-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      transform: scale(1.2);
+    }
+    
+    .dark-mode {
+      background-color: #1a1a1a;
+      color: #e5e5e5;
+    }
+    
+    .dark-mode .bg-white:not(.logo-bg) {
+      background-color: #2d2d2d !important;
+    }
+    
+    .dark-mode .bg-gray-50 {
+      background-color: #1a1a1a !important;
+    }
+    
+    .dark-mode .bg-gray-900 {
+      background-color: #0f0f0f !important;
+    }
+    
+    .dark-mode .text-gray-800,
+    .dark-mode .text-gray-700,
+    .dark-mode .text-gray-600 {
+      color: #e5e5e5 !important;
+    }
+    
+    .dark-mode .text-gray-400 {
+      color: #a0a0a0 !important;
+    }
+    
+    .dark-mode .border-gray-300 {
+      border-color: #4a4a4a !important;
+    }
+    
+    .dark-mode input,
+    .dark-mode select,
+    .dark-mode textarea {
+      background-color: #3a3a3a !important;
+      color: #e5e5e5 !important;
+      border-color: #4a4a4a !important;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body><!-- Page 1: Home -->
+  <div id="home" class="page active">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span id="nav-dealership-name" class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span id="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="hero-gradient text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <h1 id="hero-headline" class="text-5xl md:text-6xl font-bold text-center mb-4">Find The Car Just For You</h1>
+     <p id="hero-subtext" class="text-xl text-center mb-12 opacity-90">Browse our premium selection</p>
+     <div class="bg-white rounded-lg shadow-2xl p-8 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+       <div><label class="block text-gray-700 font-semibold mb-2">Year</label> <select id="filter-year" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="2024">2024</option> <option value="2023">2023</option> <option value="2022">2022</option> <option value="2021">2021</option> <option value="2020">2020</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Brand</label> <select id="filter-brand" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Toyota">Toyota</option> <option value="Honda">Honda</option> <option value="Nissan">Nissan</option> <option value="Mazda">Mazda</option> <option value="Mitsubishi">Mitsubishi</option> <option value="Subaru">Subaru</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Mileage</label> <select id="filter-mileage" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Under 30K">Under 30K</option> <option value="30K - 60K">30K - 60K</option> <option value="60K - 100K">60K - 100K</option> <option value="100K+">100K+</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Monthly Payment</label> <select id="filter-price" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Under $300/month">Under $300/month</option> <option value="$300 - $500/month">$300 - $500/month</option> <option value="$500 - $700/month">$500 - $700/month</option> <option value="$700+/month">$700+/month</option> </select>
+       </div>
+      </div>
+      <div class="flex gap-4"><button onclick="applyFiltersAndNavigate()" class="btn-primary flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700"> Filter </button> <button onclick="navigateTo('inventory')" class="btn-primary flex-1 bg-gray-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-900"> View Inventory </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800">Recently Added</h2><button onclick="navigateTo('inventory')" class="btn-primary bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700"> View Inventory </button>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\nissan magnite\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">NISSAN MAGNITE</h3>
+        <p class="text-gray-600 mb-1">2022-2023</p>
+        <p class="text-purple-600 font-semibold">$650/month</p><button onclick="navigateTo('car-recent-1')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\toyota fortuner\front(recently).jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">TOYOTA FORTUNER (D)</h3>
+        <p class="text-gray-600 mb-1">2017-2019</p>
+        <p class="text-purple-600 font-semibold">$580/month</p><button onclick="navigateTo('car-recent-2')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\mitsubishi lancer\front2.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">MITSUBISHI LANCER EX GT</h3>
+        <p class="text-gray-600 mb-1">2017-2021</p>
+        <p class="text-purple-600 font-semibold">$720/month</p><button onclick="navigateTo('car-recent-3')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800">Popular</h2><button onclick="navigateTo('inventory')" class="btn-primary bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700"> View Inventory </button>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\toyota vios\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">TOYOTA VIOS</h3>
+        <p class="text-gray-600 mb-1">2014-2016</p>
+        <p class="text-purple-600 font-semibold">$450/month</p><button onclick="navigateTo('car-popular-1')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\kia carens\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">KIA CARENS GL</h3>
+        <p class="text-gray-600 mb-1">2022</p>
+        <p class="text-purple-600 font-semibold">$620/month</p><button onclick="navigateTo('car-popular-2')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\honda civic\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2 text-gray-800">HONDA CIVIC</h3>
+        <p class="text-gray-600 mb-1">2017</p>
+        <p class="text-purple-600 font-semibold">$380/month</p><button onclick="navigateTo('car-popular-3')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-4"> View Details </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-2 gap-8">
+      <div class="card-hover bg-white rounded-xl shadow-lg p-8 text-center border">
+       <div class="text-6xl mb-4">
+        🔍
+       </div>
+       <h3 id="looking-cta-title" class="text-2xl font-bold mb-4 text-gray-800">Are You Looking For a Car?</h3>
+       <p class="text-gray-600 mb-6">Browse our extensive inventory of quality vehicles</p><button onclick="navigateTo('inventory')" class="btn-primary bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700"> Browse Inventory </button>
+      </div>
+      <div class="card-hover bg-white rounded-xl shadow-lg p-8 text-center border">
+       <div class="text-6xl mb-4">
+        💰
+       </div>
+       <h3 id="selling-cta-title" class="text-2xl font-bold mb-4 text-gray-800">Do You Want to Sell a Car?</h3>
+       <p class="text-gray-600 mb-6">Get the best value for your vehicle today</p><button onclick="navigateTo('sell')" class="btn-primary bg-gray-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-900"> Sell Your Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+        <span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <!-- Page 2: Inventory -->
+  <div id="inventory" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div>
+        <span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Our Inventory</h1>
+     <div class="bg-white rounded-lg shadow-2xl p-8 max-w-4xl mx-auto mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+       <div><label class="block text-gray-700 font-semibold mb-2">Year</label> <select id="inventory-filter-year" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="2024">2024</option> <option value="2023">2023</option> <option value="2022">2022</option> <option value="2021">2021</option> <option value="2020">2020</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Brand</label> <select id="inventory-filter-brand" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Toyota">Toyota</option> <option value="Honda">Honda</option> <option value="Nissan">Nissan</option> <option value="Mazda">Mazda</option> <option value="Mitsubishi">Mitsubishi</option> <option value="Subaru">Subaru</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Mileage</label> <select id="inventory-filter-mileage" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Under 30K">Under 30K</option> <option value="30K - 60K">30K - 60K</option> <option value="60K - 100K">60K - 100K</option> <option value="100K+">100K+</option> </select>
+       </div>
+       <div><label class="block text-gray-700 font-semibold mb-2">Monthly Payment</label> <select id="inventory-filter-price" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-black"> <option value="">Any</option> <option value="Under $300/month">Under $300/month</option> <option value="$300 - $500/month">$300 - $500/month</option> <option value="$500 - $700/month">$500 - $700/month</option> <option value="$700+/month">$700+/month</option> </select>
+       </div>
+      </div>
+      <div class="flex gap-4"><button onclick="applyInventoryFilters()" class="btn-primary flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700"> Filter </button> <button onclick="clearInventoryFilters()" class="btn-primary flex-1 bg-gray-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-900"> Clear Filters </button>
+      </div>
+     </div>
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2020" data-brand="Mazda" data-mileage="30000" data-price="520">
+       <div class="bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\mazda mx5\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">MAZDA MX-5</h3>
+        <p class="text-gray-600 mb-1">2018 - 2022</p>
+        <p class="text-purple-600 font-semibold mb-4">$520/month</p><button onclick="navigateTo('car-inv-1')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2021" data-brand="Toyota" data-mileage="35000" data-price="420">
+       <div class="bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\toyota vios\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">TOYOTA VIOS</h3>
+        <p class="text-gray-600 mb-1">2019 - 2023</p>
+        <p class="text-purple-600 font-semibold mb-4">$420/month</p><button onclick="navigateTo('car-inv-2')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2022" data-brand="Toyota" data-mileage="22500" data-price="780">
+       <div class="bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\toyota fortuner\front(inventory).jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">TOYOTA FORTUNER (D)</h3>
+        <p class="text-gray-600 mb-1">2020 - 2024</p>
+        <p class="text-purple-600 font-semibold mb-4">$780/month</p><button onclick="navigateTo('car-inv-3')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2019" data-brand="Mitsubishi" data-mileage="55000" data-price="350">
+       <div class="bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\mitsubishi lancer\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">MITSUBISHI LANCER EX GT</h3>
+        <p class="text-gray-600 mb-1">2017 - 2021</p>
+        <p class="text-purple-600 font-semibold mb-4">$350/month</p><button onclick="navigateTo('car-inv-4')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2020" data-brand="Honda" data-mileage="33500" data-price="480">
+       <div class="bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\honda civic\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">HONDA CIVIC</h3>
+        <p class="text-gray-600 mb-1">2018 - 2023</p>
+        <p class="text-purple-600 font-semibold mb-4">$480/month</p><button onclick="navigateTo('car-inv-5')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+      <div class="car-card card-hover bg-white rounded-lg shadow-lg overflow-hidden" data-year="2021" data-brand="Nissan" data-mileage="26500" data-price="690">
+       <div class="bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center"><span class="text-white text-6xl">
+         <img src="C:\Sublime\Assignment\images\nissan xtrail\front.jpeg">
+       </span>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold mb-2">NISSAN XTRAIL 4WD</h3>
+        <p class="text-gray-600 mb-1">2019 - 2024</p>
+        <p class="text-purple-600 font-semibold mb-4">$690/month</p><button onclick="navigateTo('car-inv-6')" class="btn-primary w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700"> View Details </button>
+       </div>
+      </div>
+     </div>
+     <div class="flex justify-center items-center space-x-2"><button class="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold">1</button> <button class="px-4 py-2 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-100">2</button> <button class="px-4 py-2 bg-white text-gray-700 rounded-lg font-semibold hover:bg-gray-100">3</button>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+        <span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Services Page -->
+  <div id="services" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div>
+        <span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <h1 class="text-4xl font-bold text-center mb-4 text-gray-800">Our Services</h1>
+     <p class="text-xl text-center text-gray-600 mb-12">Quality service you can trust</p>
+     <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="card-hover bg-white rounded-lg shadow-lg p-8 text-center">
+       <div class="text-6xl mb-4">
+        🔧
+       </div>
+       <h3 class="text-2xl font-bold mb-4 text-gray-800">Vehicle Maintenance</h3>
+       <p class="text-gray-600 mb-6">Complete maintenance services to keep your car running smoothly. Regular oil changes, brake inspections, and preventive care.</p>
+       <ul class="text-left text-gray-600 space-y-2 mb-6">
+        <li>• Oil changes and filter replacements</li>
+        <li>• Brake system maintenance</li>
+        <li>• Engine diagnostics</li>
+        <li>• Tire rotation and alignment</li>
+        <li>• Battery and electrical checks</li>
+       </ul>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg p-8 text-center">
+       <div class="text-6xl mb-4">
+        🔍
+       </div>
+       <h3 class="text-2xl font-bold mb-4 text-gray-800">Pre-Delivery Inspection</h3>
+       <p class="text-gray-600 mb-6">Thorough inspection of every vehicle before delivery to ensure quality and safety standards are met.</p>
+       <ul class="text-left text-gray-600 space-y-2 mb-6">
+        <li>• 150-point quality inspection</li>
+        <li>• Safety system verification</li>
+        <li>• Engine performance testing</li>
+        <li>• Interior and exterior detailing</li>
+        <li>• Documentation verification</li>
+       </ul>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg p-8 text-center">
+       <div class="text-6xl mb-4">
+        💰
+       </div>
+       <h3 class="text-2xl font-bold mb-4 text-gray-800">Vehicle Financing</h3>
+       <p class="text-gray-600 mb-6">Flexible financing options to help you get the car you want with payments that fit your budget.</p>
+       <ul class="text-left text-gray-600 space-y-2 mb-6">
+        <li>• Competitive interest rates</li>
+        <li>• Flexible payment terms</li>
+        <li>• Quick approval process</li>
+        <li>• Trade-in evaluations</li>
+        <li>• Insurance assistance</li>
+       </ul>
+      </div>
+      <div class="card-hover bg-white rounded-lg shadow-lg p-8 text-center">
+       <div class="text-6xl mb-4">
+        🔄
+       </div>
+       <h3 class="text-2xl font-bold mb-4 text-gray-800">Trade-In Evaluation</h3>
+       <p class="text-gray-600 mb-6">Get the best value for your current vehicle with our professional trade-in evaluation service.</p>
+       <ul class="text-left text-gray-600 space-y-2 mb-6">
+        <li>• Fair market value assessment</li>
+        <li>• Instant evaluation process</li>
+        <li>• Competitive trade-in offers</li>
+        <li>• Paperwork assistance</li>
+        <li>• Same-day processing</li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+        <span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Sell Your Car Page -->
+  <div id="sell" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div>
+        <span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="bg-white rounded-lg shadow-lg p-8">
+      <h1 class="text-4xl font-bold mb-2 text-center text-gray-800">Sell Your Car!</h1>
+      <p class="text-center text-gray-600 mb-8">Get the best value for your vehicle</p>
+      <form id="sell-form" onsubmit="handleSellSubmit(event)">
+       <div class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+         <div><label class="block text-gray-700 font-semibold mb-2">Your Name</label> <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="John Doe">
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Phone Number</label> <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="+673 XXXXXXX">
+         </div>
+        </div>
+        <div><label class="block text-gray-700 font-semibold mb-2">Email</label> <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="your@email.com">
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div><label class="block text-gray-700 font-semibold mb-2">Car Brand</label> <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"> <option value="">Select Brand</option> <option>Toyota</option> <option>Honda</option> <option>Nissan</option> <option>Mazda</option> <option>Mitsubishi</option> <option>Subaru</option> <option>Other</option> </select>
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Model</label> <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., Civic">
+         </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div><label class="block text-gray-700 font-semibold mb-2">Year</label> <input type="number" required min="1990" max="2024" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="2020">
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Mileage (km)</label> <input type="number" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="50000">
+         </div>
+        </div>
+        <div><label class="block text-gray-700 font-semibold mb-2">Condition</label> <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"> <option value="">Select Condition</option> <option>Excellent</option> <option>Good</option> <option>Fair</option> <option>Needs Work</option> </select>
+        </div>
+        <div><label class="block text-gray-700 font-semibold mb-2">Expected Price (BND)</label> <input type="number" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="25000">
+        </div>
+        <div><label class="block text-gray-700 font-semibold mb-2">Additional Details</label> <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Tell us more about your car..."></textarea>
+        </div><button type="submit" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Submit </button>
+       </div>
+      </form>
+      <div id="sell-success-message" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+       Thank you! We've received your information and will contact you soon.
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+        <span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Contact Page -->
+  <div id="contact" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div>
+        <span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <h1 class="text-4xl font-bold text-center mb-4 text-gray-800">Contact Us</h1>
+     <p class="text-xl text-center text-gray-600 mb-12">We're here to help you find your perfect car</p>
+     <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h2 class="text-2xl font-bold mb-6 text-gray-800">Get In Touch</h2>
+       <form id="contact-form" onsubmit="handleContactSubmit(event)">
+        <div class="space-y-4">
+         <div><label class="block text-gray-700 font-semibold mb-2">Name</label> <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Your name">
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Email</label> <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="your@email.com">
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Phone</label> <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="+673 XXXXXXX">
+         </div>
+         <div><label class="block text-gray-700 font-semibold mb-2">Message</label> <textarea rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="How can we help you?"></textarea>
+         </div><button type="submit" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Send Message </button>
+        </div>
+       </form>
+       <div id="contact-success-message" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        Thank you for contacting us! We'll get back to you soon.
+       </div>
+      </div>
+      <div class="space-y-6">
+       <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="flex items-start mb-4">
+         <div class="text-3xl mr-4">
+          📍
+         </div>
+         <div>
+          <h3 class="font-bold text-lg mb-2 text-gray-800">Our Locations</h3>
+          <p id="location-1" class="text-gray-600">Lot 123, Jalan Gadong, Bandar Seri Begawan</p>
+          <p id="location-2" class="text-gray-600 mt-2">Lot 456, Jalan Tutong, Tutong District</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="flex items-start mb-4">
+         <div class="text-3xl mr-4">
+          📞
+         </div>
+         <div>
+          <h3 class="font-bold text-lg mb-2 text-gray-800">Phone</h3>
+          <p id="phone-1" class="text-gray-600">+673 123 4567</p>
+          <p id="phone-2" class="text-gray-600 mt-2">+673 234 5678</p>
+          <p id="phone-3" class="text-gray-600 mt-2">+673 345 6789</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="flex items-start mb-4">
+         <div class="text-3xl mr-4">
+          ⏰
+         </div>
+         <div>
+          <h3 class="font-bold text-lg mb-2 text-gray-800">Business Hours</h3>
+          <p class="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
+          <p class="text-gray-600 mt-2">Saturday: 9:00 AM - 5:00 PM</p>
+          <p class="text-gray-600 mt-2">Sunday: Closed</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+        <span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <!-- Car Detail Pages - Recently Added --> <!-- Car Recent 1: Nissan Magnite -->
+  <div id="car-recent-1" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div>
+        <span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+  <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <div class="relative">
+       <div id="main-photo-1" class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6">
+        <span class="text-white text-9xl">
+         <img src="C:\Sublime\Assignment\images\nissan magnite\front.jpeg">
+       </span>
+       </div>
+       <button onclick="previousPhoto('recent-1')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('recent-1')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('1', 0)" class="photo-thumb-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan magnite\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('1', 1)" class="photo-thumb-1 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan magnite\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('1', 2)" class="photo-thumb-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan magnite\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('1', 3)" class="photo-thumb-1 bg-gradient-to-r from-blue-300 to-blue-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan magnite\interior2.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('1', 4)" class="photo-thumb-1 bg-gradient-to-r from-blue-700 to-blue-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan magnite\wheel.jpeg"></span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">NISSAN MAGNITE</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $650/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2022-2023</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">65K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Hybrid</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.0cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Red/Black</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div><span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <!-- Car Recent 2: 2023 Mazda MX-5 -->
+  <div id="car-recent-2" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div class="bg-white logo-bg rounded-lg p-2 flex items-center justify-center w-16 h-10"><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div>
+       <span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('home')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Home </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-recent-2" class="bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\front(inventory).jpeg">
+        </span>
+        </div><button onclick="previousPhoto('recent-2')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('recent-2')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('recent-2', 0)" class="photo-thumb-recent-2 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-2', 1)" class="photo-thumb-recent-2 bg-gradient-to-r from-red-400 to-red-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-2', 2)" class="photo-thumb-recent-2 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-2', 3)" class="photo-thumb-recent-2 bg-gradient-to-r from-red-300 to-red-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior2.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-2', 4)" class="photo-thumb-recent-2 bg-gradient-to-r from-red-700 to-red-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior3.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">TOYOTA FORTUNER (D)</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $580/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2017-2019</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">174K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">2.8cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Super White II</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div><span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Recent 3: 2024 Honda CR-V -->
+  <div id="car-recent-3" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('home')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Home </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-recent-3" class="bg-gradient-to-r from-gray-700 to-gray-800 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('recent-3')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('recent-3')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('recent-3', 0)" class="photo-thumb-recent-3 bg-gradient-to-r from-gray-700 to-gray-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-3', 1)" class="photo-thumb-recent-3 bg-gradient-to-r from-gray-600 to-gray-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-3', 2)" class="photo-thumb-recent-3 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-3', 3)" class="photo-thumb-recent-3 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('recent-3', 4)" class="photo-thumb-recent-3 bg-gradient-to-r from-gray-900 to-black rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">MITSUBISHI LANCER EX GT</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $720/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2019</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">127K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Hybrid</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">2.0cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Sterling Silver</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div><span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Detail Pages - Popular --> <!-- Car Popular 1: 2022 Honda Civic -->
+  <div id="car-popular-1" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('home')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Home </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-popular-1" class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('popular-1')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('popular-1')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('popular-1', 0)" class="photo-thumb-popular-1 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-1', 1)" class="photo-thumb-popular-1 bg-gradient-to-r from-green-400 to-green-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-1', 2)" class="photo-thumb-popular-1 bg-gradient-to-r from-green-600 to-green-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-1', 3)" class="photo-thumb-popular-1 bg-gradient-to-r from-green-300 to-green-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-1', 4)" class="photo-thumb-popular-1 bg-gradient-to-r from-green-700 to-green-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">TOYOTA VIOS</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $450/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2014-2016</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">111K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.5cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Super White II</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Popular 2: 2023 Toyota RAV4 -->
+  <div id="car-popular-2" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('home')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Home </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-popular-2" class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('popular-2')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('popular-2')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('popular-2', 0)" class="photo-thumb-popular-2 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-2', 1)" class="photo-thumb-popular-2 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-2', 2)" class="photo-thumb-popular-2 bg-gradient-to-r from-orange-600 to-orange-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-2', 3)" class="photo-thumb-popular-2 bg-gradient-to-r from-orange-300 to-orange-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\interior2.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-2', 4)" class="photo-thumb-popular-2 bg-gradient-to-r from-orange-700 to-orange-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\kia carens\interior3.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">KIA CARENS GL</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $620/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2022</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">93K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Hybrid</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.5cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Aurora Black</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Popular 3: 2021 Nissan Altima -->
+  <div id="car-popular-3" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('home')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Home </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-popular-3" class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('popular-3')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('popular-3')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('popular-3', 0)" class="photo-thumb-popular-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-3', 1)" class="photo-thumb-popular-3 bg-gradient-to-r from-purple-400 to-purple-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-3', 2)" class="photo-thumb-popular-3 bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-3', 3)" class="photo-thumb-popular-3 bg-gradient-to-r from-purple-300 to-purple-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('popular-3', 4)" class="photo-thumb-popular-3 bg-gradient-to-r from-purple-700 to-purple-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">HONDA CIVIC</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $380/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year</span> <span class="text-gray-600">2017</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage</span> <span class="text-gray-600">151K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.6cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Blue</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Detail Pages - Inventory --> <!-- Car Inventory 1: Mazda MX-5 -->
+  <div id="car-inv-1" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-1" class="bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-1')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-1')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-1', 0)" class="photo-thumb-inv-1 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-1', 1)" class="photo-thumb-inv-1 bg-gradient-to-r from-red-400 to-red-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-1', 2)" class="photo-thumb-inv-1 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-1', 3)" class="photo-thumb-inv-1 bg-gradient-to-r from-red-300 to-red-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\interior 1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-1', 4)" class="photo-thumb-inv-1 bg-gradient-to-r from-red-700 to-red-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mazda mx5\interior 2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">MAZDA MX-5 Skyactiv-G</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $520/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2022 - 2023</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600">24K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">2.0cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Platinum Quartz</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Inventory 2: Toyota Vios -->
+  <div id="car-inv-2" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-2" class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-2')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-2')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-2', 0)" class="photo-thumb-inv-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-2', 1)" class="photo-thumb-inv-2 bg-gradient-to-r from-blue-400 to-blue-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-2', 2)" class="photo-thumb-inv-2 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-2', 3)" class="photo-thumb-inv-2 bg-gradient-to-r from-blue-300 to-blue-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-2', 4)" class="photo-thumb-inv-2 bg-gradient-to-r from-blue-700 to-blue-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota vios\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">TOYOTA VIOS</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $420/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2014-2016</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600">151K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.6cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Super White II</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Inventory 3: Toyota Fortuner -->
+  <div id="car-inv-3" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-3" class="bg-gradient-to-r from-gray-700 to-gray-800 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\front(inventory).jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-3')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-3')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-3', 0)" class="photo-thumb-inv-3 bg-gradient-to-r from-gray-700 to-gray-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-3', 1)" class="photo-thumb-inv-3 bg-gradient-to-r from-gray-600 to-gray-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-3', 2)" class="photo-thumb-inv-3 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-3', 3)" class="photo-thumb-inv-3 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior2.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-3', 4)" class="photo-thumb-inv-3 bg-gradient-to-r from-gray-900 to-black rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\toyota fortuner\interior3.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">TOYOTA FORTUNER (D)</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $780/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2017 - 2019</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600">174K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Diesel</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">2.8cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Super White II</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Inventory 4: Mitsubishi Lancer EX GT -->
+  <div id="car-inv-4" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-4" class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-4')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-4')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-4', 0)" class="photo-thumb-inv-4 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-4', 1)" class="photo-thumb-inv-4 bg-gradient-to-r from-green-400 to-green-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-4', 2)" class="photo-thumb-inv-4 bg-gradient-to-r from-green-600 to-green-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-4', 3)" class="photo-thumb-inv-4 bg-gradient-to-r from-green-300 to-green-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-4', 4)" class="photo-thumb-inv-4 bg-gradient-to-r from-green-700 to-green-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\mitsubishi lancer\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">MITSUBISHI LANCER EX GT</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $350/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2019</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600"> 127K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">2.0cc</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Sterling Silver</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+<footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Inventory 5: Honda Civic -->
+  <div id="car-inv-5" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-5" class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-5')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-5')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-5', 0)" class="photo-thumb-inv-5 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\honda civic\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-5', 1)" class="photo-thumb-inv-5 bg-gradient-to-r from-purple-400 to-purple-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+           <img src="C:\Sublime\Assignment\images\honda civic\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-5', 2)" class="photo-thumb-inv-5 bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+           <img src="C:\Sublime\Assignment\images\honda civic\wheel.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-5', 3)" class="photo-thumb-inv-5 bg-gradient-to-r from-purple-300 to-purple-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+           <img src="C:\Sublime\Assignment\images\honda civic\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-5', 4)" class="photo-thumb-inv-5 bg-gradient-to-r from-purple-700 to-purple-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+           <img src="C:\Sublime\Assignment\images\honda civic\interior2.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">HONDA CIVIC</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $480/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2017</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600">151K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600">1.6cc</span>
+         </div>
+          <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Blue</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div>
+       <img src="C:\Sublime\Assignment\images\Logo\footer.png"></span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Car Inventory 6: Nissan X-Trail 4WD -->
+  <div id="car-inv-6" class="page">
+   <nav class="hero-gradient text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+       <div><span class="text-2xl">
+         <img src="C:\Sublime\Assignment\images\Logo\header.png">
+       </span>
+       </div><span class="text-2xl font-bold ml-3">Yuniku Motors</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center"><button class="nav-link cursor-pointer font-medium" onclick="navigateTo('home')">Home</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('inventory')">Inventory</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('services')">Services</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('sell')">Sell Your Car</button> <button class="nav-link cursor-pointer font-medium" onclick="navigateTo('contact')">Contact</button> <button onclick="toggleDarkMode()" class="ml-4 p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"> <span class="dark-mode-icon">🌙</span> </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <section class="bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><button onclick="navigateTo('inventory')" class="mb-6 text-purple-600 hover:text-purple-700 font-semibold flex items-center"> ← Back to Inventory </button>
+     <div class="grid md:grid-cols-2 gap-8">
+      <div>
+       <div class="relative">
+        <div id="main-photo-inv-6" class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-4"><span class="text-white text-9xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\front.jpeg">
+        </span>
+        </div><button onclick="previousPhoto('inv-6')" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">←</span> </button> <button onclick="nextPhoto('inv-6')" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg"> <span class="text-2xl">→</span> </button>
+       </div>
+       <div class="grid grid-cols-5 gap-2">
+        <div onclick="selectPhoto('inv-6', 0)" class="photo-thumb-inv-6 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center cursor-pointer border-2 border-purple-600"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\side.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-6', 1)" class="photo-thumb-inv-6 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\back.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-6', 2)" class="photo-thumb-inv-6 bg-gradient-to-r from-orange-600 to-orange-700 rounded-lg  flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\interior1.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-6', 3)" class="photo-thumb-inv-6 bg-gradient-to-r from-orange-300 to-orange-400 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\interior2.jpeg">
+        </span>
+        </div>
+        <div onclick="selectPhoto('inv-6', 4)" class="photo-thumb-inv-6 bg-gradient-to-r from-orange-700 to-orange-800 rounded-lg flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-purple-400"><span class="text-white text-3xl">
+          <img src="C:\Sublime\Assignment\images\nissan xtrail\interior3.jpeg">
+        </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-8">
+       <h1 class="text-4xl font-bold mb-6 text-gray-800">NISSAN XTRAIL 4WD (HIGH)</h1>
+       <div class="mb-6">
+        <div class="text-3xl font-bold text-purple-600 mb-6">
+         $690/month
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-gray-800">Specifications</h3>
+        <div class="space-y-2">
+         <div class="spec-item"><span class="font-semibold text-gray-700">Year Range</span> <span class="text-gray-600">2017 - 2022</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Mileage Range</span> <span class="text-gray-600">56K</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Fuel Type</span> <span class="text-gray-600">Petrol</span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Engine</span> <span class="text-gray-600"> 2.0cc </span>
+         </div>
+         <div class="spec-item"><span class="font-semibold text-gray-700">Color</span> <span class="text-gray-600">Blue</span>
+         </div>
+        </div>
+       </div><button onclick="navigateTo('contact')" class="btn-primary w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"> Contact Us About This Car </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div><span class="text-4xl">
+         <img src="C:\Sublime\Assignment\images\Logo\footer.png">
+       </span>
+       </div>
+       <p class="text-gray-400">Your trusted car dealership</p>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Company</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('contact')" class="hover:text-white cursor-pointer">Contact Us</button></li>
+       </ul>
+       <h4 class="font-bold text-lg mb-4 mt-6">Services</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Maintenance</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Pre-Delivery Inspection</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Vehicle Financing</button></li>
+        <li><button onclick="navigateTo('services')" class="hover:text-white cursor-pointer">Trade-In Evaluation</button></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Our Brands</h4>
+       <ul class="space-y-2 text-gray-400">
+        <li>Toyota</li>
+        <li>Honda</li>
+        <li>Nissan</li>
+        <li>Mazda</li>
+        <li>Mitsubishi</li>
+        <li>Subaru</li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-bold text-lg mb-4">Follow Us</h4>
+       <div class="flex space-x-4"><a href="#" class="social-icon text-2xl">📘</a> <a href="#" class="social-icon text-2xl">📷</a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+      <p>© 2024 Yuniku Motors. All rights reserved.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+  const defaultConfig = {
+    dealership_name: "Yuniku Motors",
+    hero_headline: "Find The Car Just For You",
+    hero_subtext: "Browse our premium selection",
+    looking_cta_title: "Are You Looking For a Car?",
+    selling_cta_title: "Do You Want to Sell a Car?",
+    location_1: "Lot 123, Jalan Gadong, Bandar Seri Begawan",
+    location_2: "Lot 456, Jalan Tutong, Tutong District",
+    phone_1: "+673 123 4567",
+    phone_2: "+673 234 5678",
+    phone_3: "+673 345 6789"
+  };
+
+  async function onConfigChange(config) {
+    const dealershipName = config.dealership_name || defaultConfig.dealership_name;
+    const heroHeadline = config.hero_headline || defaultConfig.hero_headline;
+    const heroSubtext = config.hero_subtext || defaultConfig.hero_subtext;
+    const lookingCtaTitle = config.looking_cta_title || defaultConfig.looking_cta_title;
+    const sellingCtaTitle = config.selling_cta_title || defaultConfig.selling_cta_title;
+    const location1 = config.location_1 || defaultConfig.location_1;
+    const location2 = config.location_2 || defaultConfig.location_2;
+    const phone1 = config.phone_1 || defaultConfig.phone_1;
+    const phone2 = config.phone_2 || defaultConfig.phone_2;
+    const phone3 = config.phone_3 || defaultConfig.phone_3;
+
+    const navDealershipName = document.getElementById('nav-dealership-name');
+    if (navDealershipName) navDealershipName.textContent = dealershipName;
+
+    const heroHeadlineEl = document.getElementById('hero-headline');
+    if (heroHeadlineEl) heroHeadlineEl.textContent = heroHeadline;
+
+    const heroSubtextEl = document.getElementById('hero-subtext');
+    if (heroSubtextEl) heroSubtextEl.textContent = heroSubtext;
+
+    const lookingCtaTitleEl = document.getElementById('looking-cta-title');
+    if (lookingCtaTitleEl) lookingCtaTitleEl.textContent = lookingCtaTitle;
+
+    const sellingCtaTitleEl = document.getElementById('selling-cta-title');
+    if (sellingCtaTitleEl) sellingCtaTitleEl.textContent = sellingCtaTitle;
+
+    const location1El = document.getElementById('location-1');
+    if (location1El) location1El.textContent = location1;
+
+    const location2El = document.getElementById('location-2');
+    if (location2El) location2El.textContent = location2;
+
+    const phone1El = document.getElementById('phone-1');
+    if (phone1El) phone1El.textContent = phone1;
+
+    const phone2El = document.getElementById('phone-2');
+    if (phone2El) phone2El.textContent = phone2;
+
+    const phone3El = document.getElementById('phone-3');
+    if (phone3El) phone3El.textContent = phone3;
+  }
+
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig: defaultConfig,
+      onConfigChange: onConfigChange,
+      mapToCapabilities: (config) => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ["dealership_name", config.dealership_name || defaultConfig.dealership_name],
+        ["hero_headline", config.hero_headline || defaultConfig.hero_headline],
+        ["hero_subtext", config.hero_subtext || defaultConfig.hero_subtext],
+        ["looking_cta_title", config.looking_cta_title || defaultConfig.looking_cta_title],
+        ["selling_cta_title", config.selling_cta_title || defaultConfig.selling_cta_title],
+        ["location_1", config.location_1 || defaultConfig.location_1],
+        ["location_2", config.location_2 || defaultConfig.location_2],
+        ["phone_1", config.phone_1 || defaultConfig.phone_1],
+        ["phone_2", config.phone_2 || defaultConfig.phone_2],
+        ["phone_3", config.phone_3 || defaultConfig.phone_3]
+      ])
+    });
+  }
+
+  function navigateTo(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+      targetPage.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function applyFiltersAndNavigate() {
+    const year = document.getElementById('filter-year').value;
+    const brand = document.getElementById('filter-brand').value;
+    const mileage = document.getElementById('filter-mileage').value;
+    const price = document.getElementById('filter-price').value;
+    
+    document.getElementById('inventory-filter-year').value = year;
+    document.getElementById('inventory-filter-brand').value = brand;
+    document.getElementById('inventory-filter-mileage').value = mileage;
+    document.getElementById('inventory-filter-price').value = price;
+    
+    navigateTo('inventory');
+    applyInventoryFilters();
+  }
+
+  function applyInventoryFilters() {
+    const year = document.getElementById('inventory-filter-year').value;
+    const brand = document.getElementById('inventory-filter-brand').value;
+    const mileage = document.getElementById('inventory-filter-mileage').value;
+    const price = document.getElementById('inventory-filter-price').value;
+    
+    const cards = document.querySelectorAll('.car-card');
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+      let show = true;
+      
+      if (year && card.dataset.year !== year) {
+        show = false;
+      }
+      
+      if (brand && card.dataset.brand !== brand) {
+        show = false;
+      }
+      
+      if (mileage) {
+        const carMileage = parseInt(card.dataset.mileage);
+        if (mileage === 'Under 30K' && carMileage >= 30000) show = false;
+        if (mileage === '30K - 60K' && (carMileage < 30000 || carMileage >= 60000)) show = false;
+        if (mileage === '60K - 100K' && (carMileage < 60000 || carMileage >= 100000)) show = false;
+        if (mileage === '100K+' && carMileage < 100000) show = false;
+      }
+      
+      if (price) {
+        const carPrice = parseInt(card.dataset.price);
+        if (price === 'Under $300/month' && carPrice >= 300) show = false;
+        if (price === '$300 - $500/month' && (carPrice < 300 || carPrice >= 500)) show = false;
+        if (price === '$500 - $700/month' && (carPrice < 500 || carPrice >= 700)) show = false;
+        if (price === '$700+/month' && carPrice < 700) show = false;
+      }
+      
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    
+    if (visibleCount === 0) {
+      showMessage('No cars match your filters');
+    } else {
+      showMessage(`Showing ${visibleCount} car${visibleCount !== 1 ? 's' : ''}`);
+    }
+  }
+
+  function clearInventoryFilters() {
+    document.getElementById('inventory-filter-year').value = '';
+    document.getElementById('inventory-filter-brand').value = '';
+    document.getElementById('inventory-filter-mileage').value = '';
+    document.getElementById('inventory-filter-price').value = '';
+    
+    const cards = document.querySelectorAll('.car-card');
+    cards.forEach(card => {
+      card.style.display = '';
+    });
+    
+    showMessage('Filters cleared');
+  }
+
+  function handleSellSubmit(event) {
+    event.preventDefault();
+    document.getElementById('sell-form').style.display = 'none';
+    document.getElementById('sell-success-message').classList.remove('hidden');
+  }
+
+  function handleContactSubmit(event) {
+    event.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('contact-success-message').classList.remove('hidden');
+  }
+
+  function showMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'fixed top-4 right-4 bg-purple-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+    messageDiv.textContent = message;
+    document.body.appendChild(messageDiv);
+    
+    setTimeout(() => {
+      messageDiv.remove();
+    }, 3000);
+  }
+
+  let darkMode = false;
+
+  function toggleDarkMode() {
+    darkMode = !darkMode;
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+      document.querySelectorAll('.dark-mode-icon').forEach(icon => {
+        icon.textContent = '☀️';
+      });
+      const mainIcon = document.getElementById('dark-mode-icon');
+      if (mainIcon) mainIcon.textContent = '☀️';
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.querySelectorAll('.dark-mode-icon').forEach(icon => {
+        icon.textContent = '🌙';
+      });
+      const mainIcon = document.getElementById('dark-mode-icon');
+      if (mainIcon) mainIcon.textContent = '🌙';
+    }
+  }
+
+  const photoGalleries = {
+    'recent-1': { current: 0, total: 5 },
+    'recent-2': { current: 0, total: 5 },
+    'recent-3': { current: 0, total: 5 },
+    'popular-1': { current: 0, total: 5 },
+    'popular-2': { current: 0, total: 5 },
+    'popular-3': { current: 0, total: 5 },
+    'inv-1': { current: 0, total: 5 },
+    'inv-2': { current: 0, total: 5 },
+    'inv-3': { current: 0, total: 5 },
+    'inv-4': { current: 0, total: 5 },
+    'inv-5': { current: 0, total: 5 },
+    'inv-6': { current: 0, total: 5 }
+  };
+
+  function selectPhoto(carId, index) {
+    photoGalleries[carId].current = index;
+    updateGallery(carId);
+  }
+
+  function nextPhoto(carId) {
+    photoGalleries[carId].current = (photoGalleries[carId].current + 1) % photoGalleries[carId].total;
+    updateGallery(carId);
+  }
+
+  function previousPhoto(carId) {
+    photoGalleries[carId].current = (photoGalleries[carId].current - 1 + photoGalleries[carId].total) % photoGalleries[carId].total;
+    updateGallery(carId);
+  }
+
+  function updateGallery(carId) {
+    const mainPhoto = document.getElementById(`main-photo-${carId}`);
+    const thumbs = document.querySelectorAll(`.photo-thumb-${carId}`);
+    const currentIndex = photoGalleries[carId].current;
+    
+    if (mainPhoto && thumbs.length > 0) {
+      const selectedThumb = thumbs[currentIndex];
+      
+      // Copy the background gradient classes from the selected thumbnail
+      const gradientClasses = selectedThumb.className.match(/bg-gradient-to-r from-\S+ to-\S+/g);
+      if (gradientClasses) {
+        // Remove old gradient classes from main photo
+        mainPhoto.className = mainPhoto.className.replace(/bg-gradient-to-r from-\S+ to-\S+/g, '');
+        // Add new gradient classes
+        mainPhoto.className = mainPhoto.className + ' ' + gradientClasses[0];
+      }
+      
+      // Update the emoji/icon in the main photo
+      const emojiMatch = selectedThumb.innerHTML.match(/>(.*?)</);
+      if (emojiMatch) {
+        mainPhoto.innerHTML = `<span class="text-white text-9xl">${emojiMatch[1]}</span>`;
+      }
+      
+      // Update thumbnail borders
+      thumbs.forEach((thumb, idx) => {
+        if (idx === currentIndex) {
+          thumb.classList.remove('border-transparent', 'hover:border-purple-400');
+          thumb.classList.add('border-purple-600');
+        } else {
+          thumb.classList.remove('border-purple-600');
+          thumb.classList.add('border-transparent', 'hover:border-purple-400');
+        }
+      });
+    }
+  }
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99c75fa075aefdbc',t:'MTc2Mjc5NjgzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
